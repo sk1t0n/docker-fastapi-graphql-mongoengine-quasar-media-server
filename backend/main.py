@@ -1,11 +1,14 @@
 from fastapi import FastAPI
 import uvicorn
 
+from db import connect
+
 app = FastAPI()
 
 
 @app.get('/')
 async def root():
+    connect()
     return {'message': 'TEST'}
 
 if __name__ == '__main__':

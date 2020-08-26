@@ -9,6 +9,8 @@ flake8 = "*"
 [packages]
 fastapi = "*"
 uvicorn = "*"
+python-dotenv = "*"
+mongoengine = "*"
 
 [requires]
 python_version = "3.8"
