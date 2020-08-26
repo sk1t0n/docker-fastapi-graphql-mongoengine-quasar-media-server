@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.pythonPath": "/home/gant/.local/share/virtualenvs/backend-xCYr1mX5/bin/python"
+}
