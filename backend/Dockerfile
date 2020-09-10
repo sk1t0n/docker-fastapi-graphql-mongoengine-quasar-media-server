@@ -5,7 +5,7 @@ LABEL maintainer="Anton Grabovsky <skiton25@gmail.com>"
 WORKDIR /app
 COPY . /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -U pip && pip install --no-cache-dir -r requirements.txt
 
 ENV HOST=0.0.0.0
 ENV PORT=5000

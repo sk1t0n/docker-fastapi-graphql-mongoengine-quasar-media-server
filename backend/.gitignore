@@ -1,4 +1,4 @@
-# ignore requirements.txt from Pipfile
+# Ignore requirements.txt from Pipfile
 requirements.txt
 
 # Local History for Visual Studio Code

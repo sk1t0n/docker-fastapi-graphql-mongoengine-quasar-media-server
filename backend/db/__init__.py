@@ -3,11 +3,14 @@ import os
 from dotenv import load_dotenv
 from mongoengine import connect as conn
 
-load_dotenv()
+container_env_path = os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
+    ) + '/.env'
+load_dotenv(dotenv_path=container_env_path)
 DB = os.getenv('MONGO_DB')
 USER = os.getenv('MONGO_USER')
 PASS = os.getenv('MONGO_PASSWORD')
-IP = os.getenv('MONGO_IP', '127.0.0.1')
+IP = os.getenv('MONGO_IP', '172.30.0.3')
 PORT = os.getenv('MONGO_PORT', 27017)
 
 

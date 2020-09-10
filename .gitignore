@@ -1,2 +1,5 @@
-# ignore docker volumes
+# Docker volumes
 volumes/
+
+# Environments
+.env

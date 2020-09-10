@@ -4,15 +4,33 @@ services:
   backend:
     build: ./backend
     ports: 
-      - 5000:5000
+      - "5000:5000"
     volumes:
       - ./backend:/app
     restart: always
+    networks:
+      media-server:
+        ipv4_address: "172.30.0.2"
     depends_on:
       - db
 
   db:
-    image: mongo:latest
+    image: mongo
     volumes:
       - ./volumes/db:/data/db
+      - ./db/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
+      - MONGO_INITDB_DATABASE=$MONGO_INITDB_DATABASE
+    networks:
+      media-server:
+        ipv4_address: "172.30.0.3"
     restart: always
+
+networks:
+  media-server:
+    ipam: 
+      driver: default
+      config:
+        - subnet: "172.30.0.0/28"

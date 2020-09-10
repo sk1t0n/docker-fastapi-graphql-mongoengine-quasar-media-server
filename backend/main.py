@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from db import connect
+from db import connect, models
 
 app = FastAPI()
 
@@ -8,4 +8,6 @@ app = FastAPI()
 @app.get('/')
 async def root():
     connect()
-    return {'message': 'TEST'}
+    genre = models.Genre(name='Genre 1')
+    result = genre.save()
+    return {'result': result}
