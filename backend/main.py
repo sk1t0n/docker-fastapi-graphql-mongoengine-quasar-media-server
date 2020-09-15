@@ -1,13 +1,23 @@
 from fastapi import FastAPI
 
-from db import connect, models
+from db import connect, disconnect
+from api.endpoints import router
 
-app = FastAPI()
+app = FastAPI(
+    openapi_url='/api/v1/openapi.json',
+    docs_url='/api/v1/docs',
+    redoc_url='/api/v1/redoc'
+)
 
 
-@app.get('/')
-async def root():
+@app.on_event('startup')
+def startup():
     connect()
-    genre = models.Genre(name='Genre 1')
-    result = genre.save()
-    return {'result': result}
+
+
+@app.on_event('shutdown')
+def shutdown():
+    disconnect()
+
+
+app.include_router(router, prefix='/api/v1')
