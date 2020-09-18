@@ -1,32 +1,19 @@
-import json
-from typing import Optional
-
 from mongoengine import DoesNotExist, ValidationError
+from mongoengine.queryset.queryset import QuerySet
 
-from db import models, schemas
-
-
-def get_video_list(skip: int, limit: int) -> Optional[dict]:
-    video_list = models.Video.objects.skip(skip).limit(limit).all()
-    data = json.loads(video_list.to_json())
-    return data
+from db import models
 
 
-def get_video_detail(id: str) -> Optional[dict]:
-    try:
-        video = models.Video.objects.get(id=id)
-        data = json.loads(video.to_json())
-        return data
-    except DoesNotExist:
-        return None
-    except ValidationError:
-        return None
+def get_video_list(skip: int, limit: int) -> QuerySet:
+    return models.Video.objects.skip(skip).limit(limit).all()
 
 
-def create_video(item: schemas.VideoCreate) -> Optional[dict]:
-    new_video = models.Video(**item.dict()).save()
-    data = json.loads(new_video.to_json())
-    return data
+def get_video_detail(id: str) -> models.Video:
+    return models.Video.objects.get(id=id)
+
+
+def create_video(**kwargs: dict) -> models.Video:
+    return models.Video(**kwargs).save()
 
 
 def delete_video(id: str) -> bool:
@@ -47,7 +34,7 @@ def get_genre_detail(id: str):
     pass
 
 
-def create_genre(item: schemas.GenreCreate):
+def create_genre(item):
     pass
 
 

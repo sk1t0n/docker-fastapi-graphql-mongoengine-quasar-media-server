@@ -17,3 +17,60 @@ FastAPI Media Server Implementation
     * pwd: "\<MONGO_PASSWORD from /backend/.env>"
     * db: "\<MONGO_DB from /backend/.env>"
 4. Create a requirements.txt file in the "backend" folder from Pipfile: `python3 -m pipenv lock -r > requirements.txt`
+
+## GraphQL Query
+
+    query {
+        videos(skip: 0, limit: 3) {
+            id
+            title
+            summary
+            genres {
+                id
+                name
+            }
+            releaseDate
+            runtime
+        }
+    }
+
+    query {
+        video(id: "5f6503a6b8a521f5c5071909") {
+            id
+            title
+            genres {
+                id
+                name
+            }
+        }
+    }
+
+## GraphQL Mutation
+
+    mutation {
+        createVideo(
+            title: "TEST8",
+            summary: "SUMMARY",
+            genres: [
+                "5f5a6e7c49e4b08e7ae85c0f",
+                "5f5f321b29b4cdad96b3cac2"
+            ],
+            releaseDate: "2020-09-18",
+            runtime: 68
+        ) {
+            video {
+                id
+                title
+                summary
+                genres {
+                    name
+                }
+            }
+        }
+    }
+
+    mutation {
+        deleteVideo(id: "5f6503dab8a521f5c507190a") {
+            result
+        }
+    }

@@ -1,13 +1,11 @@
 from fastapi import FastAPI
+import graphene
+from starlette.graphql import GraphQLApp
 
 from db import connect, disconnect
-from api.endpoints import router
+from api.graphql import Query, Mutation
 
-app = FastAPI(
-    openapi_url='/api/v1/openapi.json',
-    docs_url='/api/v1/docs',
-    redoc_url='/api/v1/redoc'
-)
+app = FastAPI()
 
 
 @app.on_event('startup')
@@ -20,4 +18,7 @@ def shutdown():
     disconnect()
 
 
-app.include_router(router, prefix='/api/v1')
+app.add_route(
+    '/graphql',
+    GraphQLApp(schema=graphene.Schema(query=Query, mutation=Mutation))
+)
