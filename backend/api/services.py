@@ -26,17 +26,23 @@ def delete_video(id: str) -> bool:
         return False
 
 
-def get_genre_list(skip: int = 0, limit: int = 2):
-    pass
+def get_genre_list(skip: int, limit: int) -> QuerySet:
+    return models.Genre.objects.skip(skip).limit(limit).all()
 
 
-def get_genre_detail(id: str):
-    pass
+def get_genre_detail(id: str) -> models.Genre:
+    return models.Genre.objects.get(id=id)
 
 
-def create_genre(item):
-    pass
+def create_genre(**kwargs: dict) -> models.Genre:
+    return models.Genre(**kwargs).save()
 
 
-def delete_genre(id: str):
-    pass
+def delete_genre(id: str) -> bool:
+    try:
+        models.Genre.objects.get(id=id).delete()
+        return True
+    except DoesNotExist:
+        return False
+    except ValidationError:
+        return False

@@ -22,12 +22,24 @@ class Query(graphene.ObjectType):
         limit=graphene.Int(default_value=5)
     )
     video = graphene.Field(Video, id=graphene.String())
+    genres = graphene.List(
+        Genre,
+        skip=graphene.Int(default_value=0),
+        limit=graphene.Int(default_value=5)
+    )
+    genre = graphene.Field(Genre, id=graphene.String())
 
     def resolve_videos(self, info, skip, limit):
         return services.get_video_list(skip, limit)
 
     def resolve_video(self, info, id):
         return services.get_video_detail(id)
+
+    def resolve_genres(self, info, skip, limit):
+        return services.get_genre_list(skip, limit)
+
+    def resolve_genre(self, info, id):
+        return services.get_genre_detail(id)
 
 
 class CreateVideo(graphene.Mutation):
@@ -64,6 +76,32 @@ class DeleteVideo(graphene.Mutation):
         return DeleteVideo(result=result)
 
 
+class CreateGenre(graphene.Mutation):
+    class Arguments:
+        name = graphene.String(required=True)
+
+    genre = graphene.Field(Genre)
+
+    def mutate(self, info, name):
+        genre = services.create_genre(name=name)
+
+        return CreateGenre(genre=genre)
+
+
+class DeleteGenre(graphene.Mutation):
+    class Arguments:
+        id = graphene.String()
+
+    result = graphene.Boolean()
+
+    def mutate(self, info, id):
+        result = services.delete_genre(id)
+
+        return DeleteGenre(result=result)
+
+
 class Mutation(graphene.ObjectType):
     create_video = CreateVideo.Field()
     delete_video = DeleteVideo.Field()
+    create_genre = CreateGenre.Field()
+    delete_genre = DeleteGenre.Field()
