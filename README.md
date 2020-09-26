@@ -16,7 +16,9 @@ FastAPI Media Server Implementation
     * user: "\<MONGO_USER from /backend/.env>"
     * pwd: "\<MONGO_PASSWORD from /backend/.env>"
     * db: "\<MONGO_DB from /backend/.env>"
-4. Create a requirements.txt file in the "backend" folder from Pipfile: `python3 -m pipenv lock -r > requirements.txt`
+4. Install Pipenv: `pip3 install pipenv`
+5. Create a requirements.txt file in the "backend" folder from Pipfile: `python3 -m pipenv lock -r > requirements.txt`
+6. Build and run containers: `docker-compose up --build`
 
 ## GraphQL Query
 
