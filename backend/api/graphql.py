@@ -49,16 +49,18 @@ class CreateVideo(graphene.Mutation):
         genres = graphene.List(graphene.String, default_value=[])
         release_date = graphene.Date()
         runtime = graphene.Int(required=True)
+        url = graphene.String(required=True)
 
     video = graphene.Field(Video)
 
-    def mutate(self, info, title, summary, genres, release_date, runtime):
+    def mutate(self, info, title, summary, genres, release_date, runtime, url):
         video = services.create_video(
             title=title,
             summary=summary,
             genres=genres,
             release_date=release_date,
-            runtime=runtime
+            runtime=runtime,
+            url=url
         )
 
         return CreateVideo(video=video)

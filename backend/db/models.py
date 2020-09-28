@@ -8,6 +8,7 @@ class Video(me.Document):
     genres = me.ListField(me.ReferenceField('Genre'))
     release_date = me.DateField()
     runtime = me.IntField(required=True)
+    url = me.StringField(required=True)
 
 
 class Genre(me.Document):
