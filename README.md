@@ -18,7 +18,8 @@ FastAPI Media Server Implementation
     * db: "\<MONGO_DB from /backend/.env>"
 4. Install Pipenv: `pip3 install pipenv`
 5. Create a requirements.txt file in the "backend" folder from Pipfile: `python3 -m pipenv lock -r > requirements.txt`
-6. Build and run containers: `docker-compose up --build`
+6. Change in docker-compose.yml `- ./storage:/storage/media` the path to the folder with videos
+7. Build and run containers: `docker-compose up --build`
 
 ## GraphQL Query
 

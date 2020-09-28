@@ -31,6 +31,8 @@ services:
     ports:
       - "8080:80"
     restart: always
+    volumes:
+        - ./storage:/storage/media
     networks:
       media-server:
         ipv4_address: "172.30.0.4"

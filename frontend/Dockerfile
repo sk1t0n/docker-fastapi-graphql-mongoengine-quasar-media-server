@@ -10,7 +10,8 @@ FROM nginx:alpine as production-stage
 
 LABEL maintainer="Anton Grabovsky <skiton25@gmail.com>"
 
-COPY --from=build-stage /app/dist/spa /usr/share/nginx/html
+COPY --from=build-stage /app/dist/spa /app
+COPY --from=build-stage /app/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 

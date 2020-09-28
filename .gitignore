@@ -3,3 +3,7 @@ volumes/
 
 # Environments
 .env
+
+
+# Videos
+storage/
