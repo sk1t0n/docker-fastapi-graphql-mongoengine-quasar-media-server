@@ -33,12 +33,12 @@
     <q-drawer
       v-model="leftDrawerOpen"
       side="left"
-      content-class="drawer-dark flex"
+      content-class="drawer-dark flex items-center"
     >
-      <q-list class="justify-right">
+      <q-list class="text-center">
         <q-item-label
           header
-          class="text-white text-center"
+          class="text-white"
         >
           Menu
         </q-item-label>
@@ -47,7 +47,7 @@
           :key="item.title"
           :title="item.title"
           :url="item.url"
-          class="text-white text-center"
+          class="text-white"
         />
       </q-list>
     </q-drawer>
@@ -181,6 +181,10 @@ export default {
 
 .drawer-dark {
   background-color: $drawer-dark;
+
+  .q-list {
+    width: 100%;
+  }
 }
 
 .footer-dark {
