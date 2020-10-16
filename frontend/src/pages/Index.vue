@@ -4,8 +4,8 @@
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-pa-md"
-          v-for="item in videos"
-          :key="item.url"
+          v-for="video in videos"
+          :key="video.url"
         >
           <q-card
             flat
@@ -19,11 +19,11 @@
             />
 
             <q-card-section class="mycard-header">
-              <a class="text-white">{{ item.title }}</a>
+              <a class="text-white">{{ video.title }}</a>
             </q-card-section>
 
             <q-card-section class="card-summary">
-              {{ item.summary }}
+              {{ video.url }}
             </q-card-section>
 
             <q-card-section>
@@ -44,104 +44,35 @@
 </template>
 
 <script>
-const videos = [
-  {
-    title: 'Are You Doing the Right Way',
-    summary: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-    genres: [
-      {
-        name: 'Genre 1'
-      },
-      {
-        name: 'Genre 2'
+import gql from 'graphql-tag'
+
+const videosQuery = gql`
+  query {
+    videos(skip: 0, limit: 6) {
+      id
+      title
+      summary
+      genres {
+        id
+        name
       }
-    ],
-    releaseDate: '10.10.2020',
-    runtime: 94,
-    url: '#'
-  },
-  {
-    title: 'Are You Doing the Right Way',
-    summary: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-    genres: [
-      {
-        name: 'Genre 1'
-      },
-      {
-        name: 'Genre 2'
-      }
-    ],
-    releaseDate: '10.10.2020',
-    runtime: 94,
-    url: '#'
-  },
-  {
-    title: 'Are You Doing the Right Way',
-    summary: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-    genres: [
-      {
-        name: 'Genre 1'
-      },
-      {
-        name: 'Genre 2'
-      }
-    ],
-    releaseDate: '10.10.2020',
-    runtime: 94,
-    url: '#'
-  },
-  {
-    title: 'Are You Doing the Right Way',
-    summary: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-    genres: [
-      {
-        name: 'Genre 1'
-      },
-      {
-        name: 'Genre 2'
-      }
-    ],
-    releaseDate: '10.10.2020',
-    runtime: 94,
-    url: '#'
-  },
-  {
-    title: 'Are You Doing the Right Way',
-    summary: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-    genres: [
-      {
-        name: 'Genre 1'
-      },
-      {
-        name: 'Genre 2'
-      }
-    ],
-    releaseDate: '10.10.2020',
-    runtime: 94,
-    url: '#'
-  },
-  {
-    title: 'Are You Doing the Right Way',
-    summary: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.',
-    genres: [
-      {
-        name: 'Genre 1'
-      },
-      {
-        name: 'Genre 2'
-      }
-    ],
-    releaseDate: '10.10.2020',
-    runtime: 94,
-    url: '#'
+      releaseDate
+      runtime
+      url
+    }
   }
-]
+`
 
 export default {
   name: 'PageIndex',
-  data () {
-    return {
-      videos: videos
+
+  data: () => ({
+    videos: []
+  }),
+
+  apollo: {
+    videos: {
+      query: videosQuery
     }
   }
 }
