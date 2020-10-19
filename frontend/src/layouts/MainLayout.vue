@@ -9,13 +9,13 @@
           </q-toolbar-title>
 
           <div class="gt-md top-menu">
-            <a
+            <router-link
               v-for="item in topMenu"
               :key="item.title"
-              :href="item.url"
+              :to="item.url"
             >
               {{ item.title }}
-            </a>
+            </router-link>
           </div>
 
           <q-btn
@@ -77,11 +77,11 @@ const logoText = 'Media Server'
 const topMenu = [
   {
     title: 'Home',
-    url: '#'
+    url: '/'
   },
   {
-    title: 'About',
-    url: '#'
+    title: 'Add video',
+    url: '/video/add'
   }
 ]
 

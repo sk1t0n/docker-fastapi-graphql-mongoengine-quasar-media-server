@@ -1,13 +1,11 @@
 <template>
-  <q-item
-    clickable
-    tag="a"
-    :href="url"
-  >
-    <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-    </q-item-section>
-  </q-item>
+  <router-link :to="url">
+    <q-item tag="a">
+      <q-item-section>
+        <q-item-label>{{ title }}</q-item-label>
+      </q-item-section>
+    </q-item>
+  </router-link>
 </template>
 
 <script>
