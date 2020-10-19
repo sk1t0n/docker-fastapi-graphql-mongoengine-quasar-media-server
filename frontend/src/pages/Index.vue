@@ -47,8 +47,8 @@
 import gql from 'graphql-tag'
 
 const videosQuery = gql`
-  query {
-    videos(skip: 0, limit: 6) {
+  query VideosWithPagination($skip: Int, $limit: Int) {
+    videos(skip: $skip, limit: $limit) {
       id
       title
       summary
@@ -72,7 +72,11 @@ export default {
 
   apollo: {
     videos: {
-      query: videosQuery
+      query: videosQuery,
+      variables: {
+        skip: 0,
+        limit: 6
+      }
     }
   }
 }
