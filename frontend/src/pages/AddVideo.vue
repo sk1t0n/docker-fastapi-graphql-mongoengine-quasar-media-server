@@ -2,12 +2,12 @@
   <q-page>
     <div class="container q-px-md">
       <q-form
-        @submit="onSubmit"
-        @reset="onReset"
+        @submit="addVideo"
+        @reset="resetForm"
       >
         <h5 class="text-center text-white">Add video</h5>
 
-        <div class="row q-mb-md">
+        <div class="row">
           <q-input
             class="col-xs-12 col-sm-12 col-md-8 offset-md-2"
             dark
@@ -22,7 +22,7 @@
           />
         </div>
 
-        <div class="row q-mb-md">
+        <div class="row">
           <q-input
             class="col-xs-12 col-sm-12 col-md-8 offset-md-2"
             dark
@@ -32,12 +32,25 @@
             color="teal-4"
             v-model="summary"
             label="Summary"
-            lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Please type something']"
           />
         </div>
 
-        <div class="row q-mb-md">
+        <div class="row">
+          <q-select
+            class="col-xs-12 col-sm-12 col-md-8 offset-md-2"
+            multiple
+            dark
+            outlined
+            clearable
+            clear-icon="close"
+            color="teal-4"
+            v-model="genresSelected"
+            :options="genreNames"
+            label="Genres"
+          />
+        </div>
+
+        <div class="row">
           <q-input
             class="col-xs-12 col-sm-12 col-md-8 offset-md-2"
             dark
@@ -46,7 +59,7 @@
             v-model="releaseDate"
             label="Release date"
             mask="date"
-            :rules="['date']"
+            :rules="[val => new Date(val) <= new Date() || 'You cannot choose a date in the future']"
           >
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
@@ -68,7 +81,7 @@
           </q-input>
         </div>
 
-        <div class="row q-mb-md">
+        <div class="row">
           <q-input
             class="col-xs-12 col-sm-12 col-md-8 offset-md-2"
             dark
@@ -82,7 +95,7 @@
           />
         </div>
 
-        <div class="row q-mb-md">
+        <div class="row">
           <q-input
             class="col-xs-12 col-sm-12 col-md-8 offset-md-2"
             dark
@@ -109,24 +122,115 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+
+// Date - type graphene-python
+const addVideoMutation = gql`
+  mutation CreateVideo(
+    $title: String!, $summary: String, $genres: [String!], $releaseDate: Date!, $runtime: Int!, $url: String!
+  ) {
+      createVideo(
+        title: $title,
+        summary: $summary,
+        genres: $genres,
+        releaseDate: $releaseDate,
+        runtime: $runtime,
+        url: $url
+      ) {
+          video {
+            id
+            title
+            summary
+            genres {
+              name
+            }
+            releaseDate
+            runtime
+            url
+          }
+      }
+  }
+`
+
+const genresQuery = gql`
+  query AllGenres($skip: Int, $limit: Int) {
+    genres(skip: $skip, limit: $limit) {
+      id
+      name
+    }
+  }
+`
+
 export default {
   name: 'PageAddVideo',
 
   data: () => ({
     title: null,
     summary: null,
+    genreIds: [],
+    genreNames: [],
+    genresSelected: [],
     releaseDate: null,
     runtime: null,
     url: null
   }),
 
+  async beforeMount () {
+    const result = await this.$apollo.query({
+      query: genresQuery,
+      variables: {
+        skip: 0,
+        limit: 10
+      }
+    })
+    if (result.data.genres) {
+      result.data.genres.forEach(genre => {
+        this.genreIds.push(genre.id)
+        this.genreNames.push(genre.name)
+      })
+    }
+  },
+
   methods: {
-    onSubmit () {
-      console.log('TEST')
+    getReleaseDate () {
+      const dt = new Date(this.releaseDate)
+      const month = String(dt.getMonth() + 1).padStart(2, '0')
+      const day = String(dt.getDate()).padStart(2, '0')
+      const result = `${dt.getFullYear()}-${month}-${day}`
+      return result
     },
-    onReset () {
+
+    getGenres () {
+      const result = []
+      this.genresSelected.forEach(genre => {
+        const indexGenre = this.genreNames.indexOf(genre)
+        if (indexGenre >= 0) {
+          result.push(this.genreIds[indexGenre])
+        }
+      })
+      return result
+    },
+
+    async addVideo () {
+      await this.$apollo.mutate({
+        mutation: addVideoMutation,
+        variables: {
+          title: this.title,
+          summary: this.summary,
+          genres: this.getGenres(),
+          releaseDate: this.getReleaseDate(),
+          runtime: this.runtime,
+          url: this.url
+        }
+      })
+
+      this.$router.push('/')
+    },
+
+    resetForm () {
       this.title = null
       this.summary = null
+      this.genresSelected = []
       this.releaseDate = null
       this.runtime = null
       this.url = null
@@ -139,6 +243,14 @@ export default {
 h5 {
   margin-top: 6rem;
   margin-bottom: 1rem;
+}
+
+.q-field--with-bottom {
+  padding-bottom: 0px;
+}
+
+.row {
+  padding-bottom: 16px;
 }
 
 @media screen and (max-width: 991px) {

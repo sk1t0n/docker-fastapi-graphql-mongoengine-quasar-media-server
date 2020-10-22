@@ -13,4 +13,4 @@ class Video(me.Document):
 
 class Genre(me.Document):
     meta = {'collection': 'genre'}
-    name = me.StringField(max_length=50, required=True)
+    name = me.StringField(max_length=50, required=True, unique=True)

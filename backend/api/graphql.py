@@ -47,7 +47,7 @@ class CreateVideo(graphene.Mutation):
         title = graphene.String(required=True)
         summary = graphene.String(default_value="")
         genres = graphene.List(graphene.String, default_value=[])
-        release_date = graphene.Date()
+        release_date = graphene.Date(required=True)
         runtime = graphene.Int(required=True)
         url = graphene.String(required=True)
 
