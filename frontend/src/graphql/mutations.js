@@ -27,3 +27,12 @@ export const addVideoMutation = gql`
       }
   }
 `
+export const addGenreMutation = gql`
+  mutation CreateGenre($name: String!) {
+    createGenre(name: $name) {
+      genre {
+        name
+      }
+    }
+  }
+`

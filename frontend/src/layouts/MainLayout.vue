@@ -80,6 +80,10 @@ const topMenu = [
     url: '/'
   },
   {
+    title: 'Add genre',
+    url: '/genre/add'
+  },
+  {
     title: 'Add video',
     url: '/video/add'
   }

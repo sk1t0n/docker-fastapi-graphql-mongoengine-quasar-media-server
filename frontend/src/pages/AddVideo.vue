@@ -204,37 +204,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h5 {
-  margin-top: 6rem;
-  margin-bottom: 1rem;
-}
-
-.q-field--with-bottom {
-  padding-bottom: 0px;
-}
-
-.row {
-  padding-bottom: 16px;
-}
-
-@media screen and (max-width: 991px) {
-  .buttons .q-btn {
-    width: 100%;
-
-    &:first-child {
-      margin-bottom: 36px;
-    }
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .buttons {
-    display: flex;
-    justify-content: flex-end;
-
-    .q-btn:last-child {
-      margin-left: 20px;
-    }
-  }
-}
+@import url('./../css/form.scss');
 </style>

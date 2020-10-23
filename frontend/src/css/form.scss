@@ -1,0 +1,38 @@
+h5 {
+  margin-top: 6rem;
+  margin-bottom: 1rem;
+}
+
+.q-field--with-bottom {
+  padding-bottom: 0px;
+}
+
+.q-field {
+  padding-bottom: 36px;
+}
+
+@media screen and (max-width: 991px) {
+  .buttons .q-btn {
+    width: 100%;
+
+    &:first-child {
+      margin-bottom: 36px;
+    }
+
+    &:last-child {
+      margin-bottom: 80px;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 80px;
+
+    .q-btn:last-child {
+      margin-left: 20px;
+    }
+  }
+}
