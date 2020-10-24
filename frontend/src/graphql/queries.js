@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const videosWithPaginationQuery = gql`
+const videosWithPaginationQuery = gql`
   query VideosWithPagination($skip: Int, $limit: Int) {
     videos(skip: $skip, limit: $limit) {
       id
@@ -17,7 +17,13 @@ export const videosWithPaginationQuery = gql`
   }
 `
 
-export const allGenresQuery = gql`
+const videoCountQuery = gql`
+  query VideoCount {
+    videoCount
+  }
+`
+
+const allGenresQuery = gql`
   query AllGenres($skip: Int, $limit: Int) {
     genres(skip: $skip, limit: $limit) {
       id
@@ -25,3 +31,5 @@ export const allGenresQuery = gql`
     }
   }
 `
+
+export { videosWithPaginationQuery, videoCountQuery, allGenresQuery }

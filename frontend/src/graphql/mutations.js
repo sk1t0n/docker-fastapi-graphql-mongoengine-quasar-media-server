@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 // Date - type graphene-python
-export const addVideoMutation = gql`
+const addVideoMutation = gql`
   mutation CreateVideo(
     $title: String!, $summary: String, $genres: [String!], $releaseDate: Date!, $runtime: Int!, $url: String!
   ) {
@@ -27,7 +27,7 @@ export const addVideoMutation = gql`
       }
   }
 `
-export const addGenreMutation = gql`
+const addGenreMutation = gql`
   mutation CreateGenre($name: String!) {
     createGenre(name: $name) {
       genre {
@@ -36,3 +36,4 @@ export const addGenreMutation = gql`
     }
   }
 `
+export { addVideoMutation, addGenreMutation }

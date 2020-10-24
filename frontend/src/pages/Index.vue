@@ -4,7 +4,7 @@
       <div class="row">
         <div
           class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-pa-md"
-          v-for="video in videos"
+          v-for="video in getVideos"
           :key="video.url"
         >
           <q-card
@@ -13,10 +13,7 @@
             square
             class="mycard quattrocento-font-regular"
           >
-            <q-video
-              src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
-              :ratio="16/9"
-            />
+            <video width="100%" src="media/1.mp4" controls />
 
             <q-card-section class="mycard-header">
               <a class="text-white">{{ video.title }}</a>
@@ -39,28 +36,39 @@
           </q-card>
         </div>
       </div>
+
+      <Pagination
+        class="row"
+        :apollo="this.$apollo"
+        :queryLoadData="queryLoadData"
+        :queryDataCount="queryDataCount"
+      />
     </div>
   </q-page>
 </template>
 
 <script>
-import { videosWithPaginationQuery } from './../graphql/queries'
+import { mapGetters } from 'vuex'
+
+import { videosWithPaginationQuery, videoCountQuery } from './../graphql/queries'
+import Pagination from './../components/Pagination'
 
 export default {
   name: 'PageIndex',
 
+  components: {
+    Pagination
+  },
+
   data: () => ({
-    videos: []
+    queryLoadData: videosWithPaginationQuery,
+    queryDataCount: videoCountQuery
   }),
 
-  apollo: {
-    videos: {
-      query: videosWithPaginationQuery,
-      variables: {
-        skip: 0,
-        limit: 6
-      }
-    }
+  computed: {
+    ...mapGetters([
+      'getVideos'
+    ])
   }
 }
 </script>
