@@ -8,6 +8,10 @@ def get_video_list(skip: int, limit: int) -> QuerySet:
     return models.Video.objects.skip(skip).limit(limit).all()
 
 
+def get_video_count() -> int:
+    return models.Video.objects.all().count()
+
+
 def get_video_detail(id: str) -> models.Video:
     return models.Video.objects.get(id=id)
 

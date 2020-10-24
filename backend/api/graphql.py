@@ -21,6 +21,7 @@ class Query(graphene.ObjectType):
         skip=graphene.Int(default_value=0),
         limit=graphene.Int(default_value=5)
     )
+    video_count = graphene.Int()
     video = graphene.Field(Video, id=graphene.String())
     genres = graphene.List(
         Genre,
@@ -31,6 +32,9 @@ class Query(graphene.ObjectType):
 
     def resolve_videos(self, info, skip, limit):
         return services.get_video_list(skip, limit)
+
+    def resolve_video_count(self, info):
+        return services.get_video_count()
 
     def resolve_video(self, info, id):
         return services.get_video_detail(id)
