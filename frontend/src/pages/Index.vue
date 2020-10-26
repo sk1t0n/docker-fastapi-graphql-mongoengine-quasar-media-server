@@ -13,7 +13,10 @@
             square
             class="mycard quattrocento-font-regular"
           >
-            <video width="100%" src="media/1.mp4" controls />
+            <video width="100%" controls>
+              <source src="media/1.webm" type="video/webm">
+              <source src="media/1.mp4" type="video/mp4">
+            </video>
 
             <q-card-section class="mycard-header">
               <a class="text-white">{{ video.title }}</a>

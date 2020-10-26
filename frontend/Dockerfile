@@ -12,8 +12,10 @@ LABEL maintainer="Anton Grabovsky <skiton25@gmail.com>"
 
 COPY --from=build-stage /app/dist/spa /app
 COPY --from=build-stage /app/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-stage /app/localhost.crt /etc/nginx/localhost.crt
+COPY --from=build-stage /app/localhost.key /etc/nginx/localhost.key
 
-EXPOSE 80
+EXPOSE 443
 
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]

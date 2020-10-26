@@ -8,7 +8,7 @@ export default function (/* { app, router, store, ssrContext, urlPath, redirect 
         // running quasar commands, for example:
         // `GRAPHQL_URI=https://prod.example.com/graphql quasar build`
         // `GRAPHQL_URI=https://dev.example.com/graphql quasar dev`
-        uri: process.env.GRAPHQL_URI || 'http://127.0.0.1:5000/graphql'
+        uri: process.env.GRAPHQL_URI || 'https://192.168.0.21:5000/graphql'
       },
 
       // 'apollo-cache-inmemory' config
