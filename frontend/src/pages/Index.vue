@@ -5,7 +5,7 @@
         <div
           class="col-lg-4 col-md-6 col-sm-12 col-xs-12 q-pa-md"
           v-for="video in getVideos"
-          :key="video.url"
+          :key="video.id"
         >
           <q-card
             flat
@@ -14,16 +14,36 @@
             class="mycard quattrocento-font-regular"
           >
             <video width="100%" controls>
-              <source src="media/1.webm" type="video/webm">
-              <source src="media/1.mp4" type="video/mp4">
+              <source :src="video.url | videoUrl('webm')" type="video/webm">
+              <source :src="video.url | videoUrl('mp4')" type="video/mp4">
             </video>
 
-            <q-card-section class="mycard-header">
+            <q-card-section class="mycard-title">
               <a class="text-white">{{ video.title }}</a>
             </q-card-section>
 
-            <q-card-section class="card-summary">
-              {{ video.url }}
+            <q-card-section class="mycard-field">
+              Genres:
+              <a
+                v-for="genre in video.genres"
+                :key="genre.id"
+                href="/"
+              >
+                {{ genre.name }}
+              </a>
+            </q-card-section>
+
+            <q-card-section class="mycard-field">
+              Release date: {{ video.releaseDate | realeaseDateFormat }}
+            </q-card-section>
+
+            <q-card-section class="mycard-field">
+              Runtime: {{ video.runtime }} min
+              <div class="hr" />
+            </q-card-section>
+
+            <q-card-section class="mycard-summary">
+              {{ video.summary | trim }}
             </q-card-section>
 
             <q-card-section>
@@ -63,6 +83,26 @@ export default {
     Pagination
   },
 
+  filters: {
+    videoUrl: (value, extension) => `/media/${value.split('.')[0]}.${extension}`,
+
+    trim (value) {
+      if (value.length > 200) {
+        return value.slice(0, 200) + ' ...'
+      }
+      return value
+    },
+
+    realeaseDateFormat (value) {
+      const language = window.navigator.language
+      if (language.includes('ru')) {
+        const arr = value.split('-')
+        return `${arr[2]}.${arr[1]}.${arr[0]}`
+      }
+      return value
+    }
+  },
+
   data: () => ({
     queryLoadData: videosWithPaginationQuery,
     queryDataCount: videoCountQuery
@@ -81,18 +121,29 @@ export default {
   background-color: $card-background;
   color: $card-text-color;
 
-  .mycard-header {
-    font-size: 1.3rem;
-
-    a:hover {
-      color: $card-header-hover-text-color !important;
-      cursor: pointer;
-    }
+  a:hover {
+    color: $card-header-hover-text-color !important;
+    cursor: pointer;
   }
 
-  .card-summary {
-    font-size: 16px !important;
+  .mycard-title {
+    font-size: 1.3rem;
+  }
+
+  .mycard-field {
     margin-top: -25px;
+    margin-bottom: -30px;
+    font-size: 1rem;
+  }
+
+  .hr {
+    border-top: 1px solid $grey-8;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .mycard-summary {
+    font-size: 0.9rem;
     margin-bottom: -15px;
   }
 

@@ -106,7 +106,7 @@
             v-model="url"
             label="Url"
             lazy-rules
-            :rules="[ val => val && val.length > 0 || 'Specify the path to the video inside the storage folder (example: folder1/1.mp4 or 1.mp4)']"
+            :rules="[ val => val && val.length > 0 || 'Specify the path to the video inside the storage folder (example: folder1/1.webm or 1.mp4)']"
           />
         </div>
 

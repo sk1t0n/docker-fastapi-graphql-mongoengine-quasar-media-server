@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="show" class="q-pa-lg flex flex-center">
+    <div v-if="show" class="flex flex-center">
       <q-pagination
         v-model="current"
         :max="pages"
@@ -84,6 +84,20 @@ export default {
 </script>
 
 <style lang="scss">
+@media screen and (max-width: 767px) {
+  .q-pagination {
+    padding-top: 12px;
+    padding-bottom: 24px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .q-pagination {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
 .no-wrap {
   flex-wrap: wrap;
   justify-content: center;
