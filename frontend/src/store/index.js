@@ -15,16 +15,21 @@ Vue.use(Vuex)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     state: {
-      videos: []
+      videos: [],
+      video: {}
     },
 
     getters: {
-      getVideos: state => state.videos
+      getVideos: state => state.videos,
+      getVideo: state => state.video
     },
 
     mutations: {
       updateVideos: (state, videos) => {
         state.videos = videos
+      },
+      updateVideo: (state, video) => {
+        state.video = video
       }
     },
 

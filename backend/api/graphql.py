@@ -22,7 +22,7 @@ class Query(graphene.ObjectType):
         limit=graphene.Int(default_value=5)
     )
     video_count = graphene.Int()
-    video = graphene.Field(Video, id=graphene.String())
+    video = graphene.Field(Video, id=graphene.ID(required=True))
     genres = graphene.List(
         Genre,
         skip=graphene.Int(default_value=0),

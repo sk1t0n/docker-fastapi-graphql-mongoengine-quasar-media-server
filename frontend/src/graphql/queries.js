@@ -23,6 +23,23 @@ const videoCountQuery = gql`
   }
 `
 
+const videoQuery = gql`
+  query Video($id: ID!) {
+    video(id: $id) {
+      id
+      title
+      summary
+      genres {
+        id
+        name
+      }
+      releaseDate
+      runtime
+      url
+    }
+  }
+`
+
 const allGenresQuery = gql`
   query AllGenres($skip: Int, $limit: Int) {
     genres(skip: $skip, limit: $limit) {
@@ -32,4 +49,4 @@ const allGenresQuery = gql`
   }
 `
 
-export { videosWithPaginationQuery, videoCountQuery, allGenresQuery }
+export { videosWithPaginationQuery, videoCountQuery, videoQuery, allGenresQuery }

@@ -11,15 +11,20 @@
             flat
             bordered
             square
-            class="mycard quattrocento-font-regular"
+            class="mycard"
           >
             <video width="100%" controls>
-              <source :src="video.url | videoUrl('webm')" type="video/webm">
-              <source :src="video.url | videoUrl('mp4')" type="video/mp4">
+              <source :src="video.url | videoUrlByExtension('webm')" type="video/webm">
+              <source :src="video.url | videoUrlByExtension('mp4')" type="video/mp4">
             </video>
 
             <q-card-section class="mycard-title">
-              <a class="text-white">{{ video.title }}</a>
+              <router-link
+                class="text-white"
+                :to="getVideoPageUrl(video.id)"
+              >
+                {{ video.title }}
+              </router-link>
             </q-card-section>
 
             <q-card-section class="mycard-field">
@@ -27,7 +32,7 @@
               <a
                 v-for="genre in video.genres"
                 :key="genre.id"
-                href="/"
+                :href="getGenreUrl(genre.id)"
               >
                 {{ genre.name }}
               </a>
@@ -47,14 +52,16 @@
             </q-card-section>
 
             <q-card-section>
-              <q-btn
-                label="Read more"
-                size="16px"
-                class="btn-read-more text-white"
-                no-caps
-                unelevated
-                padding="8px 20px"
-              />
+              <router-link :to="getVideoPageUrl(video.id)">
+                <q-btn
+                  label="Read more"
+                  size="16px"
+                  class="btn-read-more text-white"
+                  no-caps
+                  unelevated
+                  padding="8px 20px"
+                />
+              </router-link>
             </q-card-section>
           </q-card>
         </div>
@@ -76,6 +83,8 @@ import { mapGetters } from 'vuex'
 import { videosWithPaginationQuery, videoCountQuery } from './../graphql/queries'
 import Pagination from './../components/Pagination'
 
+import filterVideoUrlByExtension from '../helpers'
+
 export default {
   name: 'PageIndex',
 
@@ -84,7 +93,7 @@ export default {
   },
 
   filters: {
-    videoUrl: (value, extension) => `/media/${value.split('.')[0]}.${extension}`,
+    videoUrlByExtension: filterVideoUrlByExtension,
 
     trim (value) {
       if (value.length > 200) {
@@ -112,6 +121,11 @@ export default {
     ...mapGetters([
       'getVideos'
     ])
+  },
+
+  methods: {
+    getVideoPageUrl: id => `video/${id}`,
+    getGenreUrl: id => `genre/${id}`
   }
 }
 </script>

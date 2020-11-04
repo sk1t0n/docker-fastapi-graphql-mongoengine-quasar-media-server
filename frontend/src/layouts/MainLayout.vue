@@ -1,6 +1,8 @@
 <template>
-  <q-layout view="hHh LpR fff" class="background-dark">
-
+  <q-layout
+    view="hHh LpR fff"
+    class="background-dark quattrocento-font-regular"
+  >
     <q-header class="header-dark text-white">
       <div class="container">
         <q-toolbar>
@@ -56,7 +58,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer class="footer-dark text-center quattrocento-font-regular">
+    <q-footer class="footer-dark text-center ">
       <a href="https://github.com">
         <q-avatar size="64px" class="social-btn">
           <q-img src="../assets/GitHub-Mark-64px.png" />
@@ -73,7 +75,7 @@
 <script>
 import MobileMenu from 'components/MobileMenu.vue'
 
-const logoText = 'Media Server'
+const logoText = 'Home Media Server'
 const topMenu = [
   {
     title: 'Home',
@@ -116,9 +118,25 @@ export default {
   padding-top: 4px;
 }
 
-.header-logo {
-  font-size: 30px;
-  margin-left: 2rem;
+@media screen and (min-width: 440px) {
+  .header-logo {
+    font-size: 30px;
+    margin-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 439px) {
+  .header-logo {
+    font-size: 25px;
+    margin-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .header-logo {
+    font-size: 20px;
+    margin-left: 2rem;
+  }
 }
 
 .top-menu a {
