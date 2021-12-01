@@ -3,7 +3,7 @@ FROM node:alpine as build-stage
 WORKDIR /app
 COPY . /app
 
-RUN yarn global add @quasar/cli && yarn install && quasar build -m spa
+RUN export NODE_OPTIONS=--openssl-legacy-provider && yarn global add @quasar/cli && yarn install && quasar build -m spa
 
 
 FROM nginx:alpine as production-stage

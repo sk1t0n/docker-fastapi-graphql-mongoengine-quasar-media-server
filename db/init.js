@@ -1,12 +1,10 @@
-db.createUser(
+db.createUser({
+  user: 'root',
+  pwd: '12345',
+  roles: [
     {
-        user: "user",
-        pwd: "password",
-        roles: [
-            {
-                role: "readWrite",
-                db: "media-server"
-            }
-        ]
-    }
-);
+      role: 'readWrite',
+      db: 'test_db',
+    },
+  ],
+})
